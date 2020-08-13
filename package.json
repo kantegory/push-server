@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/kantegory/push-server/issues"
   },
-  "homepage": "https://github.com/kantegory/push-server#readme"
+  "homepage": "https://github.com/kantegory/push-server#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "ini": "^1.3.5",
+    "socketio": "^1.0.0"
+  }
 }
