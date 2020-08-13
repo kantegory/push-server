@@ -1,6 +1,5 @@
-// firebase_subscribe.js
 firebase.initializeApp({
-  messagingSenderId: ''
+  messagingSenderId: '1086760512407'
 });
 
 // браузер поддерживает уведомления
@@ -18,6 +17,25 @@ if ('Notification' in window) {
   // и подписываем его
   document.querySelector('#subscribe').addEventListener('click', function() {
     subscribe();
+  });
+
+  messaging.onMessage(function(payload) {
+    console.log('Message received. ', payload);
+
+    // регистрируем пустой ServiceWorker каждый раз
+    navigator.serviceWorker.register('messaging-sw.js');
+
+    // запрашиваем права на показ уведомлений если еще не получили их
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          // теперь мы можем показать уведомление
+          return registration.showNotification(payload.notification.title, payload.notification);
+        }).catch(function(error) {
+          console.log('ServiceWorker registration failed', error);
+        });
+      }
+    });
   });
 }
 
@@ -54,8 +72,8 @@ function sendTokenToServer(currentToken) {
 
     var url = '/saveToken'; // адрес скрипта на сервере который сохраняет ID устройства
     fetch(url, {
-        method: 'POST',
-      body: JSON.stringify({token: currentToken})
+      method: 'POST',
+      body: JSON.stringify({ token: currentToken })
     });
 
     setTokenSentToServer(currentToken);
