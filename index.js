@@ -11,14 +11,42 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
+const bodyParser = require('body-parser');
+const axios = require('axios');
 
 // app params
 const port = __config.port;
 
 server.listen(port);
 
+// middlewares
+app.use(express.static(`${__dirname}/client/`));
+app.use(bodyParser.json());
+
 // routes
 app.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write('{"success": true}');
+  res.end();
+})
+
+app.get('/notification', (req, res) => {
+  res.sendFile(`${__dirname}/client/index.html`);
+})
+
+app.post('/saveToken', (req, res) => {
+  let body = req.body;
+  let token = body.token;
+
+  console.log("NEW USER TOKEN IS", token);
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write('{"success": true}');
+  res.end();
+})
+
+app.post('/send', (req, res) => {
+  let body = req.body;
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write('{"success": true}');
   res.end();
