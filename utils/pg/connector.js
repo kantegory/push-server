@@ -2,7 +2,7 @@
 const __moduleName = 'database';
 
 // config params & deps
-const configParser = require('../utils/configParser');
+const configParser = require('../configParser');
 const __configPath = './config/config.ini';
 const __config = configParser(__configPath, __moduleName);
 
@@ -17,6 +17,8 @@ const client = new Client({
   password: __config.password,
   port: __config.port
 })
+
+console.log(client)
 
 client.connect()
 
