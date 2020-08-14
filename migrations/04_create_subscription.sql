@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS subscription (
+  id BIGSERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  topic_id INT NOT NULL
+);
