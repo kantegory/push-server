@@ -1,7 +1,7 @@
 {
   "name": "push-server",
   "version": "1.0.0",
-  "description": "Simple nodejs push-server, using socket.io",
+  "description": "Simple nodejs push-server, using FCM + PG",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index"
