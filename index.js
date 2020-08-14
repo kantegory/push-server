@@ -13,6 +13,9 @@ const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const bodyParser = require('body-parser');
 
+// FCM functions
+const sendPush = require('./utils/fcm/send');
+
 // app params
 const port = __config.port;
 
@@ -46,6 +49,11 @@ app.post('/saveToken', (req, res) => {
 
 app.post('/send', (req, res) => {
   let body = req.body;
+  let payload = body.payload;
+  let tokens = body.tokens;
+
+  sendPush(tokens, payload);
+
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write('{"success": true}');
   res.end();
