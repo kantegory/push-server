@@ -1,0 +1,12 @@
+{
+  "tokens": ["esZyUbFW3zY:APA91bHiC0YTj-2L_TtSHwbg3m-Hs0k8XAsuFbjsl0otNFGI3BnrgIETqqU5x0RlNLxCOA5glcgQYBS0Gz-4CKx-F4-Gw9xRHiv5xGUCnNGjbLTgNaOB-6AKD3qBmvO7Z8uZh_7-1I7A"],
+  "payload":
+  {
+    "notification":
+    {
+      "title": "This is a Notification",
+      "body": "This is the body of the notification message.",
+      "click_action": "http://kubteh.ru"
+    }
+  }
+}

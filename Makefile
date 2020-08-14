@@ -2,4 +2,4 @@ run:
 	npm start
 
 send:
-	node utils/fcm/send.js
+	curl -X POST -H "Content-type: application/json" -d @./testPush.json http://localhost:8080/send
