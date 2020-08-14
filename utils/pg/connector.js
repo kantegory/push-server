@@ -18,8 +18,6 @@ const client = new Client({
   port: __config.port
 })
 
-console.log(client)
-
 client.connect()
 
 module.exports = client

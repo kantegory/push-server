@@ -5,7 +5,7 @@ const getNotifications = async (userId) => {
   let _res = []
 
   const query = {
-    text: 'SELECT * from notifications WHERE user_id = $1;',
+    text: 'SELECT * FROM notifications WHERE user_id = $1;',
     values: [Number(userId)],
   }
 
