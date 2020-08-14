@@ -29,8 +29,9 @@ if ('Notification' in window) {
     Notification.requestPermission(function(result) {
       if (result === 'granted') {
         navigator.serviceWorker.ready.then(function(registration) {
+          payload.notification.data = payload.notification; // параметры уведомления
           // теперь мы можем показать уведомление
-          return registration.showNotification(payload.notification.title, payload.notification);
+          registration.showNotification(payload.notification.title, payload.notification);
         }).catch(function(error) {
           console.log('ServiceWorker registration failed', error);
         });
