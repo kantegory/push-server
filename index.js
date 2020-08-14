@@ -31,9 +31,11 @@ app.get('/', (req, res) => {
 
 app.post('/saveToken', (req, res) => {
   let body = req.body;
+  
   let token = body.token;
+  let userId = body.userId;
 
-  console.log("NEW USER TOKEN IS", token);
+  console.log(`NEW TOKEN FOR USER ID ${userId} IS ${token}`);
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write('{"success": true}');
