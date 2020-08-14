@@ -70,11 +70,15 @@ function subscribe() {
 function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer(currentToken)) {
     console.log('Отправка токена на сервер...');
+    let userId = 1;
 
     var url = '/saveToken'; // адрес скрипта на сервере который сохраняет ID устройства
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ token: currentToken })
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ token: currentToken, userId: userId })
     });
 
     setTokenSentToServer(currentToken);
