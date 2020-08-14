@@ -1,17 +1,17 @@
 const client = require('../connector')
 
-const saveTopic = (values) => {
+const saveTopic = async (title, description) => {
+
+  let _res = [];
 
   const query = {
-    text: 'INSERT INTO topic (title, description) VALUES ($1, $2);',
-    values: values,
+    text: 'INSERT INTO topic (title, description) VALUES ($1, $2) RETURNING id;',
+    values: [title, description],
   }
 
-  client.query(query, (err, res) => {
-    if (err) throw err
-    console.log('INSERTED')
-  })
+  _res = await client.query(query)
 
+  return _res.rows;
 }
 
 module.exports = saveTopic;

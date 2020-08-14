@@ -81,11 +81,19 @@ app.post('/send', (req, res) => {
 })
 
 // -- -- topic endpoint
-app.post('/topic', (req, res) => {
+app.post('/topic', async (req, res) => {
   let body = req.body;
 
   let title = body.title;
   let description = body.description;
+
+  // save topic to database
+  let savedTopic = await saveTopic(title, description);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(`{"success": true, "topicId": ${savedTopic[0].id}}`);
+  res.end();
 })
 
 // -- -- subsription endpoint
@@ -103,7 +111,6 @@ app.post('/subscribe', async (req, res) => {
 
   // get topic title 
   let topic = await getTopics(topicId);
-  console.log(topic);
   let topicTitle = topic[0].title;
 
   // subscribe user to topic
