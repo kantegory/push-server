@@ -1,10 +1,10 @@
 const client = require('../connector')
 
-const saveSubscription = (values) => {
+const saveSubscription = (userId, topicId) => {
 
   const query = {
-    text: 'INSERT INTO subscriptions (timestamp, text, type) VALUES ($1, $2, $3);',
-    values: values,
+    text: 'INSERT INTO subscriptions (user_id, topic_id) VALUES ($1, $2);',
+    values: [Number(userId), Number(topicId)]
   }
 
   client.query(query, (err, res) => {

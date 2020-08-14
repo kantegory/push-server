@@ -89,12 +89,25 @@ app.post('/topic', (req, res) => {
 })
 
 // -- -- subsription endpoint
-app.post('/subscribe', (req, res) => {
+app.post('/subscribe', async (req, res) => {
   let body = req.body;
 
   let userId = body.userId;
   let topicId = body.topicId;
 
-  // let userTokens = 
-})
+  // get user devices for subscribe them
+  let userDevices = await getUserDevices(userId);
 
+  // get user tokens
+  let userTokens = userDevices[0].tokens;
+
+  // get topic title 
+  let topic = getTopics(topicId);
+  let topicTitle = topic[0].title;
+
+  // subscribe user to topic
+  subscribe(userTokens, topicTitle);
+
+  // save data to db
+  saveSubscriptions(userId, topicId);
+})

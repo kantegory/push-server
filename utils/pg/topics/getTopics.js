@@ -1,11 +1,12 @@
 const client = require('../connector')
 
-const getTopics = async () => {
+const getTopics = async (topicId) => {
 
   let _res = []
 
   const query = {
-    text: 'SELECT * FROM topic;',
+    text: 'SELECT * FROM topic WHERE id = $1;',
+    values: [Number(topicId)]
   }
 
   _res = await client.query(query);
