@@ -23,7 +23,7 @@ const getTopics = require('./utils/pg/topics/getTopics');
 const saveUserDevice = require('./utils/pg/userDevices/saveUserDevice');
 const getUserDevices = require('./utils/pg/userDevices/getUserDevices');
 // -- subscriptions
-const saveSubscriptions = require('./utils/pg/subscriptions/saveSubscriptions');
+const saveSubscription = require('./utils/pg/subscriptions/saveSubscription');
 const getSubscriptions = require('./utils/pg/subscriptions/getSubscriptions');
 
 // FCM functions
@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 app.post('/saveToken', (req, res) => {
   // get body from request
   let body = req.body;
-  
+
   // get data from body
   let token = body.token;
   let userId = body.userId;
@@ -59,7 +59,7 @@ app.post('/saveToken', (req, res) => {
   // save user device to db
   let values = [userId, token];
   saveUserDevice(values);
-  
+
   // send response
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write('{"success": true}');
@@ -102,12 +102,18 @@ app.post('/subscribe', async (req, res) => {
   let userTokens = userDevices[0].tokens;
 
   // get topic title 
-  let topic = getTopics(topicId);
+  let topic = await getTopics(topicId);
+  console.log(topic);
   let topicTitle = topic[0].title;
 
   // subscribe user to topic
   subscribe(userTokens, topicTitle);
 
   // save data to db
-  saveSubscriptions(userId, topicId);
+  saveSubscription(userId, topicId);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write('{"success": true}');
+  res.end();
 })

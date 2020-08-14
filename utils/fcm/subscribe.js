@@ -3,7 +3,7 @@ const fcmApp = require('./connector');
 
 // subscribe function
 const subscribe = (tokens, topic) => {
-  fcmApp.messaging().sendToDevice(tokens, topic)
+  fcmApp.messaging().subscribeToTopic(tokens, topic)
     .then(function(response) {
       console.log("Successfully subscribed to topic:", response);
     })
