@@ -1,4 +1,4 @@
-const client = require('./connector')
+const client = require('../connector')
 
 const getNotifications = async (userId) => {
 

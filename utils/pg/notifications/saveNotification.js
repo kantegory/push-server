@@ -1,4 +1,4 @@
-const client = require('./connector')
+const client = require('../connector')
 
 const saveNotification = (values) => {
 
@@ -14,4 +14,4 @@ const saveNotification = (values) => {
 
 }
 
-module.exports = saveNotification
+module.exports = saveNotification;
