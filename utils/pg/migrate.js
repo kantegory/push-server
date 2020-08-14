@@ -46,4 +46,8 @@ const migrate = () => {
   return null;
 }
 
-module.exports = migrate;
+// export module, uncomment if you need
+// module.exports = migrate;
+
+// run migrations, comment next line if you export this script as module
+migrate();
