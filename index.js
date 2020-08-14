@@ -27,12 +27,6 @@ app.use(bodyParser.json());
 
 // routes
 app.get('/', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write('{"success": true}');
-  res.end();
-})
-
-app.get('/notification', (req, res) => {
   res.sendFile(`${__dirname}/client/index.html`);
 })
 
