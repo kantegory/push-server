@@ -224,3 +224,20 @@ app.get('/user/email/:userId', async (req, res) => {
   res.write(`{"success": true, "user_email": ${userEmail}}`);
   res.end();
 })
+
+// -- -- email options endpoint
+app.post('/user/email/options', async (req, res) => {
+  let body = req.body;
+
+  let userId = body.userId;
+  let topicId = body.topicId;
+  let isUnsubscribe = body.unsubscribe;
+
+  // save data to db
+  saveEmailOption(userId, topicId);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write('{"success": true}');
+  res.end();
+})
