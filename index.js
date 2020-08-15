@@ -59,8 +59,7 @@ app.post('/saveToken', async (req, res) => {
   console.log(`NEW TOKEN FOR USER ID ${userId} IS ${token}`);
 
   // save user device to db
-  let values = [userId, token];
-  saveUserDevice(values);
+  saveUserDevice(userId, token);
 
   // check user subscriptions
   let subscriptions = await getSubscriptions(userId);

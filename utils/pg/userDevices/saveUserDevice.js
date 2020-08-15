@@ -3,14 +3,13 @@ const client = require('../connector')
 // dependecies
 const getUserDevices = require('./getUserDevices');
 
-const saveUserDevice = async (values) => {
+const saveUserDevice = async (userId, token) => {
 
-  let userId = Number(values[0]);
-  let deviceToken = values[1];
+  userId = Number(userId);
 
   let query = {
     text: 'INSERT INTO user_devices (user_id, tokens) VALUES ($1, $2);',
-    values: [userId, JSON.stringify([deviceToken])],
+    values: [userId, JSON.stringify([token])],
   }
 
   // get all of user previous device tokens
@@ -22,8 +21,8 @@ const saveUserDevice = async (values) => {
     let tokens = userDevices[0].tokens;
 
     // check if tokens not includes current token, then add
-    if (!tokens.includes(deviceToken)) {
-      tokens.push(deviceToken);
+    if (!tokens.includes(token)) {
+      tokens.push(token);
     }
 
     tokens = JSON.stringify(tokens);
