@@ -192,3 +192,19 @@ app.post('/subscribe', async (req, res) => {
   res.write('{"success": true}');
   res.end();
 })
+
+// -- -- user email endpoints
+app.post('/user/email/add', (req, res) => {
+  let body = req.body;
+
+  let userId = body.userId;
+  let userEmail = body.userEmail;
+
+  // save data to db
+  saveUserEmail(userId, userEmail);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write('{"success": true}');
+  res.end();
+})
