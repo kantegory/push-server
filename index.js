@@ -28,6 +28,9 @@ const getSubscriptions = require('./utils/pg/subscriptions/getSubscriptions');
 // -- user emails
 const saveUserEmail = require('./utils/pg/userEmails/saveUserEmail');
 const getUserEmail = require('./utils/pg/userEmails/getUserEmail');
+// -- email options
+const saveEmailOption = require('./utils/pg/emailOptions/saveEmailOption');
+const getEmailOptions = require('./utils/pg/emailOptions/getEmailOptions');
 
 // FCM functions
 const sendPush = require('./utils/fcm/send');
