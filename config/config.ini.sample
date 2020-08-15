@@ -1,0 +1,15 @@
+[main]
+port=8080
+[database]
+user=postgres
+password=postgres
+host=localhost
+port=5432
+name=pushdb
+[migrations]
+dir=/home/kantegory/work/push-server/migrations
+[mailer]
+host=smtp.example.com
+port=465
+user=noreply@example.com
+pass=suppasecretpass
