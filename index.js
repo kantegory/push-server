@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 
 // -- REST API endpoints
 // -- -- save token endpoint
-app.post('/saveToken', (req, res) => {
+app.post('/saveToken', async (req, res) => {
   // get body from request
   let body = req.body;
 
@@ -61,6 +61,30 @@ app.post('/saveToken', (req, res) => {
   // save user device to db
   let values = [userId, token];
   saveUserDevice(values);
+
+  // check user subscriptions
+  let subscriptions = await getSubscriptions(userId);
+
+  // if user has any subscriptions, we should subscribe his new device to them
+  if (subscriptions.length) {
+    let userSubscriptions = subscriptions[0].topic_ids;
+
+    // get topic titles for each user subscription
+    let topicTitles = [];
+
+    for (let subscription of userSubscriptions) {
+      let topic = await getTopics(subscription);
+      let topicTitle = topic[0].title;
+      topicTitles.push(topicTitle);
+    }
+
+    // resubscribe user to each topic
+    for (let topic of topicTitles) {
+      subscribe(token, topic);
+    }
+  }
+
+
 
   // send response
   res.writeHead(200, { 'Content-Type': 'application/json' });

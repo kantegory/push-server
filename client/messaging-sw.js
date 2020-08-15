@@ -10,8 +10,8 @@ self.addEventListener('notificationclick', function(event) {
     includeUncontrolled: true
   }).then(function(clientList) {
     // clientList почему-то всегда пуст!?
-    for (var i = 0; i < clientList.length; i++) {
-      var client = clientList[i];
+    for (let i = 0; i < clientList.length; i++) {
+      let client = clientList[i];
       if (client.url == target && 'focus' in client) {
         return client.focus();
       }
