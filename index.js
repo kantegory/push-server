@@ -129,6 +129,19 @@ app.post('/topic', async (req, res) => {
   res.end();
 })
 
+app.get('/topic/all', async (req, res) => {
+  // get all topic ids
+  let topics = await getTopics('all');
+
+  // convert topics to json
+  topics = JSON.stringify(topics);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(`{"success": true, "topics": ${topics}}`);
+  res.end();
+})
+
 // -- -- subsription endpoint
 app.post('/subscribe', async (req, res) => {
   let body = req.body;

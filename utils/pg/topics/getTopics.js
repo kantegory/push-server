@@ -4,10 +4,20 @@ const getTopics = async (topicId) => {
 
   let _res = []
 
-  const query = {
-    text: 'SELECT * FROM topic WHERE id = $1;',
-    values: [Number(topicId)]
+  let query = {};
+
+  // check if we should return all topics
+  if (topicId === 'all') {
+    query = {
+      text: 'SELECT * FROM topic;'
+    }
+  } else {
+    query = {
+      text: 'SELECT * FROM topic WHERE id = $1;',
+      values: [Number(topicId)]
+    }
   }
+
 
   _res = await client.query(query);
 
