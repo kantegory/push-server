@@ -30,6 +30,7 @@ const getSubscriptions = require('./utils/pg/subscriptions/getSubscriptions');
 const sendPush = require('./utils/fcm/send');
 const sendToTopic = require('./utils/fcm/sendToTopic');
 const subscribe = require('./utils/fcm/subscribe');
+const unsubscribe = require('./utils/fcm/unsubscribe');
 
 // app params
 const port = __config.port;
@@ -110,6 +111,7 @@ app.post('/subscribe', async (req, res) => {
 
   let userId = body.userId;
   let topicId = body.topicId;
+  let isUnsubscribe = body.unsubscribe;
 
   // get user devices for subscribe them
   let userDevices = await getUserDevices(userId);
@@ -121,8 +123,14 @@ app.post('/subscribe', async (req, res) => {
   let topic = await getTopics(topicId);
   let topicTitle = topic[0].title;
 
-  // subscribe user to topic
-  subscribe(userTokens, topicTitle);
+  // check if unsubscribe
+  if (isUnsubscribe) {
+    // unsubscribe user from topic
+    unsubscribe(userTokens, topicTitle);
+  } else {
+    // subscribe user to topic
+    subscribe(userTokens, topicTitle);
+  }
 
   // save data to db
   saveSubscription(userId, topicId);
