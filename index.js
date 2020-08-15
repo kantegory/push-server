@@ -130,7 +130,7 @@ app.post('/topic', async (req, res) => {
 })
 
 app.get('/topic/all', async (req, res) => {
-  // get all topic ids
+  // get all topics
   let topics = await getTopics('all');
 
   // convert topics to json
@@ -139,6 +139,21 @@ app.get('/topic/all', async (req, res) => {
   // success
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write(`{"success": true, "topics": ${topics}}`);
+  res.end();
+})
+
+app.get('/topic/:id', async (req, res) => {
+  let topicId = req.params.id;
+
+  // get topic
+  let topic = await getTopics(topicId);
+
+  // convert topics json
+  topic = JSON.stringify(topic[0]);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(`{"success": true, "topic": ${topic}}`);
   res.end();
 })
 
