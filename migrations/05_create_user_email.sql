@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS user_emails (
+  id BIGSERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  user_email VARCHAR(255) NOT NULL
+);
