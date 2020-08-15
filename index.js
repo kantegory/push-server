@@ -25,6 +25,9 @@ const getUserDevices = require('./utils/pg/userDevices/getUserDevices');
 // -- subscriptions
 const saveSubscription = require('./utils/pg/subscriptions/saveSubscription');
 const getSubscriptions = require('./utils/pg/subscriptions/getSubscriptions');
+// -- user emails
+const saveUserEmail = require('./utils/pg/userEmails/saveUserEmail');
+const getUserEmail = require('./utils/pg/userEmails/getUserEmail');
 
 // FCM functions
 const sendPush = require('./utils/fcm/send');
@@ -82,8 +85,6 @@ app.post('/saveToken', async (req, res) => {
       subscribe(token, topic);
     }
   }
-
-
 
   // send response
   res.writeHead(200, { 'Content-Type': 'application/json' });
