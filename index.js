@@ -208,3 +208,16 @@ app.post('/user/email/add', (req, res) => {
   res.write('{"success": true}');
   res.end();
 })
+
+app.get('/user/email/:userId', async (req, res) => {
+  let userId = req.params.userId;
+
+  // get user email
+  let userEmail = await getUserEmail(userId);
+  userEmail = userEmail[0].user_email;
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(`{"success": true, "user_email": ${userEmail}}`);
+  res.end();
+})
