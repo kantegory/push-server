@@ -3,7 +3,7 @@ const client = require('../connector')
 // dependecies
 const getSubscriptions = require('./getSubscriptions');
 
-const saveSubscription = async (userId, topicId) => {
+const saveSubscription = async (userId, topicId, isUnsubscribe) => {
 
   userId = Number(userId);
   topicId = Number(topicId);
@@ -21,8 +21,15 @@ const saveSubscription = async (userId, topicId) => {
     let topics = subscriptions[0].topic_ids;
 
     // check if topics not includes current topic, then add
-    if (!topics.includes(topicId)) {
+    if (!topics.includes(topicId) && !isUnsubscribe) {
       topics.push(topicId);
+    }
+
+    // check if isUnsubscribe, then remove element from array
+    if (topics.includes(topicId) && isUnsubscribe) {
+      let topicIndex = topics.indexOf(topicId);
+
+      topics.splice(topicIndex, 1);
     }
 
     topics = JSON.stringify(topics);

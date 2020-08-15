@@ -188,7 +188,7 @@ app.post('/subscribe', async (req, res) => {
   }
 
   // save data to db
-  saveSubscription(userId, topicId);
+  saveSubscription(userId, topicId, isUnsubscribe);
 
   // success
   res.writeHead(200, { 'Content-Type': 'application/json' });
