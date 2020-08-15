@@ -3,7 +3,7 @@ const client = require('../connector')
 // dependecies
 const getEmailOptions = require('./getEmailOptions');
 
-const saveEmailOption = async (userId, topicId) => {
+const saveEmailOption = async (userId, topicId, isUnsubscribe) => {
 
   userId = Number(userId);
   topicId = Number(topicId);
@@ -23,6 +23,18 @@ const saveEmailOption = async (userId, topicId) => {
     // check if topics not includes current topic, then add
     if (!topics.includes(topicId)) {
       topics.push(topicId);
+    }
+
+    // check if topics not includes current topic, then add
+    if (!topics.includes(topicId) && !isUnsubscribe) {
+      topics.push(topicId);
+    }
+
+    // check if isUnsubscribe, then remove element from array
+    if (topics.includes(topicId) && isUnsubscribe) {
+      let topicIndex = topics.indexOf(topicId);
+
+      topics.splice(topicIndex, 1);
     }
 
     topics = JSON.stringify(topics);

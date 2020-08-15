@@ -234,7 +234,7 @@ app.post('/user/email/options', async (req, res) => {
   let isUnsubscribe = body.unsubscribe;
 
   // save data to db
-  saveEmailOption(userId, topicId);
+  saveEmailOption(userId, topicId, isUnsubscribe);
 
   // success
   res.writeHead(200, { 'Content-Type': 'application/json' });
