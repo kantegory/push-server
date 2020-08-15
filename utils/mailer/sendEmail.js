@@ -6,11 +6,8 @@ const configParser = require('../configParser');
 const __configPath = './config/config.ini';
 const __config = configParser(__configPath, __moduleName);
 
-// dependecies
-const nm = require('nodemailer');
-
 // get transporter
-const transporter = requrie('./connector');
+const transporter = require('./connector');
 
 // send email function
 const sendEmail = (to, subject, text) => {

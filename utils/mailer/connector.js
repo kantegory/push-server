@@ -10,7 +10,7 @@ const __config = configParser(__configPath, __moduleName);
 const nm = require('nodemailer');
 
 // create transporter
-const transporter = nodemailer.createTransport({
+const transporter = nm.createTransport({
   host: __config.host,
   port: __config.port,
   auth: {

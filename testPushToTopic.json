@@ -1,6 +1,6 @@
 {
   "isToTopic": true, 
-  "topic": "test",
+  "topicId": 1,
   "payload":
   {
     "notification":

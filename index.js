@@ -38,6 +38,9 @@ const sendToTopic = require('./utils/fcm/sendToTopic');
 const subscribe = require('./utils/fcm/subscribe');
 const unsubscribe = require('./utils/fcm/unsubscribe');
 
+// Mailer functions
+const sendEmail = require('./utils/mailer/sendEmail');
+
 // app params
 const port = __config.port;
 
@@ -96,7 +99,7 @@ app.post('/saveToken', async (req, res) => {
 })
 
 // -- -- send push endpoint
-app.post('/send', (req, res) => {
+app.post('/send', async (req, res) => {
   let body = req.body;
 
   let payload = body.payload;
@@ -105,8 +108,37 @@ app.post('/send', (req, res) => {
 
   // check if push is to topic, then send
   if (isToTopic) {
-    let topic = body.topic;
-    sendToTopic(topic, payload);
+    let topicId = body.topicId;
+
+    // get topic title
+    let topicTitle = await getTopics(topicId);
+    topicTitle = topicTitle[0].title;
+
+    // send push
+    sendToTopic(topicTitle, payload);
+
+    // send email
+    // -- get emails for send
+    let userEmails = [];
+
+    let emailOptions = await getEmailOptions('all');
+    
+    // -- -- get options for each email, then push to userEmails
+    for (let emailOption of emailOptions) {
+      if (emailOption.topic_ids.includes(topicId)) {
+        let userEmail = await getUserEmail(emailOption.user_id);
+
+        userEmail = userEmail[0].user_email;
+
+        userEmails.push(userEmail);
+      }
+    }
+
+    // -- finally send email
+    let subject = payload.notification.title;
+    let text = payload.notification.body;
+
+    sendEmail(userEmails, subject, text);
   } else {
     sendPush(tokens, payload);
   }
