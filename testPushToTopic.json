@@ -1,0 +1,13 @@
+{
+  "isToTopic": true, 
+  "topic": "test",
+  "payload":
+  {
+    "notification":
+    {
+      "title": "This is a Notification",
+      "body": "This is the body of the notification message.",
+      "click_action": "http://kubteh.ru"
+    }
+  }
+}

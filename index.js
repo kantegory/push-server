@@ -28,6 +28,7 @@ const getSubscriptions = require('./utils/pg/subscriptions/getSubscriptions');
 
 // FCM functions
 const sendPush = require('./utils/fcm/send');
+const sendToTopic = require('./utils/fcm/sendToTopic');
 const subscribe = require('./utils/fcm/subscribe');
 
 // app params
@@ -72,8 +73,15 @@ app.post('/send', (req, res) => {
 
   let payload = body.payload;
   let tokens = body.tokens;
+  let isToTopic = body.isToTopic;
 
-  sendPush(tokens, payload);
+  // check if push is to topic, then send
+  if (isToTopic) {
+    let topic = body.topic;
+    sendToTopic(topic, payload);
+  } else {
+    sendPush(tokens, payload);
+  }
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.write('{"success": true}');
