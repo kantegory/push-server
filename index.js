@@ -11,6 +11,7 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // PG functions
 // -- notifications
@@ -49,6 +50,7 @@ server.listen(port);
 // middlewares
 app.use(express.static(`${__dirname}/client/`));
 app.use(bodyParser.json());
+app.use(cors());
 
 // routes
 app.get('/', (req, res) => {
