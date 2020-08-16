@@ -1,0 +1,15 @@
+[Unit]
+Description=Push-server
+After=multi-user.target
+Conflicts=getty@tty1.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /var/www/html/push-server/index.js
+WorkingDirectory=/var/www/html/push-server/
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
