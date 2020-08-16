@@ -21,11 +21,6 @@ const saveEmailOption = async (userId, topicId, isUnsubscribe) => {
     let topics = email_options[0].topic_ids;
 
     // check if topics not includes current topic, then add
-    if (!topics.includes(topicId)) {
-      topics.push(topicId);
-    }
-
-    // check if topics not includes current topic, then add
     if (!topics.includes(topicId) && !isUnsubscribe) {
       topics.push(topicId);
     }
