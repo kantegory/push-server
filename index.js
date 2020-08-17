@@ -230,6 +230,25 @@ app.post('/subscribe', async (req, res) => {
   res.end();
 })
 
+app.get('/subscription/:userId', async (req, res) => {
+  // get userId from params
+  let userId = req.params.userId;
+
+  // get user subscriptions
+  let subscriptions = await getSubscriptions(userId);
+
+  // extract subscriptions
+  subscriptions = subscriptions[0].topic_ids;
+
+  // stringify
+  subscriptions = JSON.stringify(subscriptions);
+
+  // success
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(`{"success": true, "subscriptions": ${subscriptions}}`);
+  res.end();
+})
+
 // -- -- user email endpoints
 app.post('/user/email/add', (req, res) => {
   let body = req.body;
