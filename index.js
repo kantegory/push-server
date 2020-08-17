@@ -124,7 +124,7 @@ app.post('/send', async (req, res) => {
     let userEmails = [];
 
     let emailOptions = await getEmailOptions('all');
-    
+
     // -- -- get options for each email, then push to userEmails
     for (let emailOption of emailOptions) {
       if (emailOption.topic_ids.includes(topicId)) {
@@ -209,6 +209,34 @@ app.post('/subscribe', async (req, res) => {
   let userTokens = userDevices[0].tokens;
 
   // get topic title 
+  // check if we get an array
+  if (typeof(topicId) === 'object' && topicId.length) {
+    // subscribe for each topic
+    for (let _topicId of topicId) {
+      let topic = await getTopics(_topicId);
+      let topicTitle = topic[0].title;
+
+      // check if unsubscribe
+      if (isUnsubscribe) {
+        // unsubscribe user from topic
+        unsubscribe(userTokens, topicTitle);
+      } else {
+        // subscribe user to topic
+        subscribe(userTokens, topicTitle);
+      }
+
+      // save data to db
+      saveSubscription(userId, _topicId, isUnsubscribe);
+    }
+
+    // success
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.write('{"success": true}');
+    res.end();
+
+    return;
+  }
+
   let topic = await getTopics(topicId);
   let topicTitle = topic[0].title;
 

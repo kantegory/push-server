@@ -4,7 +4,6 @@ const client = require('../connector')
 const getSubscriptions = require('./getSubscriptions');
 
 const saveSubscription = async (userId, topicId, isUnsubscribe) => {
-
   userId = Number(userId);
   topicId = Number(topicId);
 
