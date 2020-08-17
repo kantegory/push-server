@@ -1,6 +1,9 @@
 run:
 	npm start
 
+init:
+	npm i	
+
 send:
 	curl -X POST -H "Content-type: application/json" -d @./testPush.json http://localhost:8080/send
 
