@@ -243,9 +243,18 @@ app.get('/subscription/:userId', async (req, res) => {
   // stringify
   subscriptions = JSON.stringify(subscriptions);
 
+  // get user email options
+  let emailOptions = await getEmailOptions(userId);
+
+  // extract
+  emailOptions = emailOptions[0].topic_ids;
+
+  // stringify
+  emailOptions = JSON.stringify(emailOptions);
+
   // success
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write(`{"success": true, "subscriptions": ${subscriptions}}`);
+  res.write(`{"success": true, "subscriptions": ${subscriptions}, "emailOptions": ${emailOptions}}`);
   res.end();
 })
 
