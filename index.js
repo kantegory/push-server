@@ -200,7 +200,7 @@ app.post('/subscribe', async (req, res) => {
 
   let userId = body.userId;
   let topicId = body.topicId;
-  let isUnsubscribe = body.unsubscribe;
+  let isUnsubscribe = body.isUnsubscribe;
 
   // get user devices for subscribe them
   let userDevices = await getUserDevices(userId);
@@ -224,11 +224,19 @@ app.post('/subscribe', async (req, res) => {
         // subscribe user to topic
         subscribe(userTokens, topicTitle);
       }
-
-      // save data to db
-      saveSubscription(userId, _topicId, isUnsubscribe);
     }
 
+    // save data to db
+    saveSubscription(userId, topicId, isUnsubscribe);
+
+    // success
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.write('{"success": true}');
+    res.end();
+
+    return;
+
+  } else if (typeof(topicId) === 'object' && !topicId.length) {
     // success
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.write('{"success": true}');
@@ -321,7 +329,7 @@ app.post('/user/email/options', async (req, res) => {
 
   let userId = body.userId;
   let topicId = body.topicId;
-  let isUnsubscribe = body.unsubscribe;
+  let isUnsubscribe = body.isUnsubscribe;
 
   // save data to db
   saveEmailOption(userId, topicId, isUnsubscribe);
