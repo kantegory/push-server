@@ -62,4 +62,22 @@ That's all. All of endpoints of push-server available now at http://yourdomain.n
 
 ## REST API Endpoints
 
-Description in progress.
+`/saveToken`, method: POST, input params: token (required), userId (required). This endpoint is needed for saving user device token to our database.
+
+`/send`, mehod: POST, input params: payload (required), tokens (optional), isToTopic (optional), topicId (optional). This endpoint is needed for sending push and email to user by device token/tokens or to topic.
+
+`/topic`, method: POST, input params: title (required), description (required). Save topic to database. Title param should be in "OneWord"-form.
+
+`/topic/:id`, method: GET, input params: :id (required), return topic by topicId.
+
+`/topic/all`, method: GET, return all topics.
+
+`/subscribe`, method: POST, input params: userId (required), topicId (required), isUnsubscribe (optional). Using for subscribe user to topic or unsubscribe user from topic. Also, you can send JSON array as a topicId, for subscribe user to some topics.
+
+`/subscription/:userId`, method: GET, input params: :userId (required), return all user subscriptions, by userId.
+
+`/user/email/add`, method: POST, input params: userId (required), userEmail (required). Using for saving user email.
+
+`/user/email/:userId`, method: GET, input params: :userId (required). Return user email by user id.
+
+`/user/email/options`, method: POST, input params: userId (required), topicId (required), isUnsubscribe (optional). Similar to `/subscribe` endpoint, but only for emails.
