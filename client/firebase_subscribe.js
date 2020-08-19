@@ -1,4 +1,4 @@
-const pushServer = 'http://localhost:8080';
+const pushServer = 'https://push.kubteh.ru';
 
 setTimeout(() => {
   firebase.initializeApp({

@@ -45,12 +45,28 @@ const sendEmail = require('./utils/mailer/sendEmail');
 // app params
 const port = __config.port;
 
+// cors options
+const whitelist = [
+  'http://patest.kubteh.ru', 'https://patest.kubteh.ru',
+  'http://politanalytic.ru', 'https://politanalytic.ru'
+]
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 server.listen(port);
 
 // middlewares
 app.use(express.static(`${__dirname}/client/`));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // routes
 app.get('/', (req, res) => {
