@@ -22,7 +22,7 @@ const saveSubscription = async (userId, topicId, isUnsubscribe) => {
   let subscriptions = await getSubscriptions(userId);
 
   // check if not empty, then update subscriptions
-  if (subscriptions) {
+  if (subscriptions.length) {
     let topics = subscriptions[0].topic_ids;
 
     if (typeof(topicId) !== 'object') {

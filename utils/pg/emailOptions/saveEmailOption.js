@@ -12,6 +12,9 @@ const saveEmailOption = async (userId, topicId, isUnsubscribe) => {
   // process topicId
   if (typeof(topicId) !== 'object') {
     _topicId = [JSON.stringify[Number(topicId)]];
+  } else {
+    topicId = topicId.map((_topic) => { return Number(_topic) });
+    _topicId = JSON.stringify(topicId);
   }
 
   let query = {
@@ -23,7 +26,7 @@ const saveEmailOption = async (userId, topicId, isUnsubscribe) => {
   let email_options = await getEmailOptions(userId);
 
   // check if not empty, then update email_options
-  if (email_options) {
+  if (email_options.length) {
     let topics = email_options[0].topic_ids;
 
     if (typeof(topicId) !== 'object') {

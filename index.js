@@ -205,6 +205,12 @@ app.post('/subscribe', async (req, res) => {
   // get user devices for subscribe them
   let userDevices = await getUserDevices(userId);
 
+  if (!userDevices.length) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.write('{"success": false}');
+    res.end();
+  }
+
   // get user tokens
   let userTokens = userDevices[0].tokens;
 
@@ -273,6 +279,13 @@ app.get('/subscription/:userId', async (req, res) => {
   // get user subscriptions
   let subscriptions = await getSubscriptions(userId);
 
+  if (!subscriptions.length) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.write(`{"success": false}`);
+    res.end();
+    return;
+  }
+
   // extract subscriptions
   subscriptions = subscriptions[0].topic_ids;
 
@@ -281,6 +294,13 @@ app.get('/subscription/:userId', async (req, res) => {
 
   // get user email options
   let emailOptions = await getEmailOptions(userId);
+
+  if (!emailOptions.length) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.write(`{"success": false}`);
+    res.end();
+    return;
+  }
 
   // extract
   emailOptions = emailOptions[0].topic_ids;
