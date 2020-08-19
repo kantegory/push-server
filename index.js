@@ -11,7 +11,6 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
-const cors = require('cors');
 
 // PG functions
 // -- notifications
@@ -45,28 +44,11 @@ const sendEmail = require('./utils/mailer/sendEmail');
 // app params
 const port = __config.port;
 
-// cors options
-const whitelist = [
-  'http://patest.kubteh.ru', 'https://patest.kubteh.ru',
-  'http://politanalytic.ru', 'https://politanalytic.ru'
-]
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
 server.listen(port);
 
 // middlewares
 app.use(express.static(`${__dirname}/client/`));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
 
 // routes
 app.get('/', (req, res) => {
