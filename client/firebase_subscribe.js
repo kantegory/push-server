@@ -74,7 +74,6 @@ setTimeout(() => {
     if (!isTokenSentToServer(currentToken)) {
       console.log('Отправка токена на сервер...');
       let userId = localStorage.uid;
-      let userEmail = document.querySelector('#userEmail').value;
 
       var url = `${pushServer}/saveToken`; // адрес скрипта на сервере который сохраняет ID устройства
       fetch(url, {
@@ -85,15 +84,8 @@ setTimeout(() => {
         body: JSON.stringify({ token: currentToken, userId: userId })
       });
 
-      url = `${pushServer}/user/email/add`; // адрес скрипта на сервере который сохраняет email пользователя
-      
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({ userEmail: userEmail, userId: userId })
-      });
+      // receieve email
+      saveUserEmail(userId);
 
       setTokenSentToServer(currentToken);
     } else {
@@ -112,5 +104,33 @@ setTimeout(() => {
       'sentFirebaseMessagingToken',
       currentToken ? currentToken : ''
     );
+  }
+
+  function saveUserEmail(userId) {
+    fetch(`https://pa.kubteh.ru/api/user/${userId}/`)
+      .then((res) => { return res.json() })
+      .then((res) => { receiveUserEmail(res.user) })
+      .catch((err) => { console.error('Api error', err) });
+  }
+
+  function receiveUserEmail(userId) {
+    fetch(`https://pa.kubteh.ru/api/staf/${userId}/`)
+      .then((res) => { return res.json() })
+      .then((res) => { sendUserEmailToServer(res.email) })
+      .catch((err) => { console.error('Api error', err) })
+  }
+
+  function sendUserEmailToServer(userEmail) {
+    let userId = localStorage.uid;
+
+    let url = `${pushServer}/user/email/add`; // адрес скрипта на сервере который сохраняет email пользователя
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ userEmail: userEmail, userId: userId })
+    });
   }
 }, 1500)
