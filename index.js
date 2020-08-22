@@ -230,6 +230,8 @@ app.post('/subscribe', async (req, res) => {
       }
     }
 
+    topicId = topicId.map((topic) => { return Number(topic) });
+
     // save data to db
     saveSubscription(userId, topicId, isUnsubscribe);
 
