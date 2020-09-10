@@ -107,7 +107,6 @@ app.post('/send', async (req, res) => {
   let isToTopic = body.isToTopic;
   let isToUser = body.isToUser;
 
-
   // check if push is to topic, then send
   if (isToTopic) {
     let topicId = body.topicId;
@@ -148,7 +147,7 @@ app.post('/send', async (req, res) => {
 
     // get user devices
     let userDevices = await getUserDevices(userId);
-    tokens = userDevices.tokens;
+    tokens = userDevices[0].tokens;
 
     // send push
     sendPush(tokens, payload);

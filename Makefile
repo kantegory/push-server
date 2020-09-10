@@ -14,7 +14,7 @@ topprod:
 	curl --insecure -X POST -H "Content-type: application/json" -d @./testPushToTopicProd.json https://push.kubteh.ru/send
 
 sendUser:
-	curl -X POST -H "Content-type: application/json" -d @./testPushToUser.json http://localhost:8080/send
+	curl -X POST -H "Content-type: application/json" -d @./testPushToUser.json https://push.kubteh.ru/send
 
 migrate:
 	npm run migrate
