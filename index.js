@@ -105,6 +105,8 @@ app.post('/send', async (req, res) => {
   let payload = body.payload;
   let tokens = body.tokens;
   let isToTopic = body.isToTopic;
+  let isToUser = body.isToUser;
+
 
   // check if push is to topic, then send
   if (isToTopic) {
@@ -139,6 +141,28 @@ app.post('/send', async (req, res) => {
     let text = payload.notification.body;
 
     sendEmail(userEmails, subject, text);
+  }
+  // check if push is to user, then send
+  else if (isToUser) {
+    let userId = body.userId;
+
+    // get user devices
+    let userDevices = await getUserDevices(userId);
+    tokens = userDevices.tokens;
+
+    // send push
+    sendPush(tokens, payload);
+
+    // send email
+    // -- get email for send
+    let userEmail = await getUserEmail(userId);
+    userEmail = userEmail[0].user_email;
+
+    // -- finally send email
+    let subject = payload.notification.title;
+    let text = payload.notification.body;
+
+    sendEmail(userEmail, subject, text);
   } else {
     sendPush(tokens, payload);
   }
