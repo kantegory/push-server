@@ -1,0 +1,15 @@
+{
+  "isToUser": true, 
+  "userId": 9,
+  "payload":
+  {
+    "notification":
+    {
+      "title": "This is a Notification",
+      "body": "This is the body of the notification message.",
+      "click_action": "http://kubteh.ru",
+      "image": "https://kubteh.ru/uploads/pages/5cc4b1697ef53/tokcrm.jpg",
+      "icon": "https://kubteh.ru/uploads/pages/5cc4b1697ef53/specsvyaz.jpg"
+    }
+  }
+}
